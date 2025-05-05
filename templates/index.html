@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>House Price Predictor</h1>
+            <p>Enter the details below to get a predicted price for the house:</p>
+            <form id="predictionForm">
+                <div class="input-group">
+                    <label for="MedInc">Median Income:</label>
+                    <input type="number" step="any" id="MedInc" name="MedInc" required>
+                </div>
+                <div class="input-group">
+                    <label for="HouseAge">House Age (years):</label>
+                    <input type="number" step="any" id="HouseAge" name="HouseAge" required>
+                </div>
+                <div class="input-group">
+                    <label for="Population">Population:</label>
+                    <input type="number" step="any" id="Population" name="Population" required>
+                </div>
+                <div class="input-group">
+                    <label for="AveOccup">Average Occupancy:</label>
+                    <input type="number" step="any" id="AveOccup" name="AveOccup" required>
+                </div>
+                <button type="submit" class="submit-btn">Predict Price</button>
+            </form>
+            <div id="result" class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            let url = `/predict?MedInc=${document.getElementById('MedInc').value}&HouseAge=${document.getElementById('HouseAge').value}&Population=${document.getElementById('Population').value}&AveOccup=${document.getElementById('AveOccup').value}`;
+            
+            const response = await fetch(url);
+            const prediction = await response.text();
+            document.getElementById('result').innerHTML = `<p>Predicted Price: <strong>${prediction}</strong></p>`;
+        });
+    </script>
+</body>
+</html>
